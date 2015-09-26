@@ -61,10 +61,10 @@ Music.prototype.formatResponse = function(action, response) {
 			break;
 		case 'state': 
 			var txt = [
-				"*TRACK:* " + response.message.track_id,
-				"*VOLUME:* " + response.message.volume,
-				"*POSITION:* " + response.message.position,
-				"*STATE:* " + response.message.state
+				"*TRACK:* " + (typeof response.message.track_id == 'undefined' ? 'unavailable' : response.message.track_id),
+				"*VOLUME:* " + (typeof response.message.volume  == 'undefined' ? 'unavailable' : response.message.volume),
+				"*POSITION:* " + (typeof response.message.position == 'undefined' ? 'unavailable' : response.message.position),
+				"*STATE:* " + (typeof response.message.state == 'undefined' ? 'unavailable' : response.message.state)
 			].join("\n");
 
 			return { value: txt, markdwn: true, icon: ':musical_note:'};
