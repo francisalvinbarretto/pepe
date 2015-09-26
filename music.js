@@ -31,7 +31,6 @@ module.exports = function(CommandDispatcher) {
 		return;
 	}
 
-
 	if(!CommandDispatcher instanceof EventEmitter) {
 		console.log('CommandDispatcher not an instance of EventEmitter');
 		return;
@@ -50,7 +49,10 @@ module.exports = function(CommandDispatcher) {
 			Spotify._request(action, cb);
 		}else {
 			var spotify_match = /(spotify:(.*))/gi.exec(action);
-			console.log('matched: ', spotify_match);
+			if(spotify_match !== null) {
+				console.log('\tPlaying track: ', spotify_match[0]);
+				Spotify._request('playtrack/' + spotify_match[0], cb);
+			}
 		}
 	});
 }
