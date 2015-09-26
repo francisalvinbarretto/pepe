@@ -5,7 +5,7 @@ var Entities = require('html-entities').XmlEntities,
 	entities = new Entities();
 
 var Slack = require('slack-client');
-var Message = require('./node_modules/slack-client/src/message');
+var Message = require('../node_modules/slack-client/src/message');
 
 var SlackMusic = require('./music');
 var Pp = require('./pp');
