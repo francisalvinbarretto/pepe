@@ -7,7 +7,10 @@ var music_providers = {
 };
 
 var EVENT_NAME = '!ppmusic';
-var ACTIONS = [ 'play', 'pause', 'next', 'prev', 'playing', 'vol/low', 'vol/mid', 'vol/party', 'mute', 'unmute' ];
+
+var SONATA_ACTIONS = ['play', 'pause', 'next', 'prev', 'playing' ];
+var PLAYER_ACTIONS = ['vol/low', 'vol/mid', 'vol/party', 'mute', 'unmute', 'running' ];
+var ACTIONS = SONATA_ACTIONS.concat(PLAYER_ACTIONS);
 
 function Music() {}
 
@@ -18,10 +21,46 @@ Music.prototype._request = function(action, options, cb) {
 		options = {};
 	}
 
-	var url = ['http://', music_providers.francis, '/spotifyer/sonata-' + action].join("");
+	var path = [ 
+		'/spotifyer/', 
+		PLAYER_ACTIONS.indexOf(action) != -1 ? 'player' : 'sonata' ,
+		'-', 
+		action 
+	].join("");
+
+	var url = ['http://', music_providers.francis, path].join("");
 	request({ url: url }, function(err, response, body) {
 		cb(err, body);
 	});
+}
+
+
+Music.prototype.formatResponse = function(action, response) {
+	switch(action) {
+		case 'playing': 
+			if(response.error && response.message.spotify_url) {
+				return response.message.spotify_url;
+			}
+			break;
+		case 'play'
+		case 'playtrack':
+			if(response.error) {
+				return response.message;
+			}
+			break;
+		case 'running': 
+			if(!response.error) {
+				return response.message;
+			}
+			break;
+		case 'vol/low':
+		case 'vol/mid':
+		case 'vol/party':
+			return response.message;
+			break;
+		default:
+			return FALSE;
+	}
 }
 
 var Spotify = new Music();
@@ -45,18 +84,21 @@ module.exports = function(CommandDispatcher) {
 		var cb = function(err, response) {
 			if(!err) {
 				var resJson = JSON.parse(response);
-				console.log('json: ', resJson);
+				var formattedResponse = Music.formatResponse(action, resJson);
 
-				var payload = {
-					message: { 
-						text: resJson.message.spotify_url,
-						username: '!ppmusic',
-						icon_emoji: ':musical_note:'
-					},
-					channel: channel
-				};
+				if(formattedResponse != false) {
+					var payload = {
+						message: { 
+							text: formattedResponse,
+							username: '!ppmusic',
+							icon_emoji: ':musical_note:'
+						},
+						channel: channel
+					};
 
-				CommandDispatcher.emit('send_response', payload);
+					CommandDispatcher.emit('send_response', payload);	
+				}
+				
 			}
 		};
 
@@ -65,8 +107,9 @@ module.exports = function(CommandDispatcher) {
 		}else {
 			var spotify_match = /(spotify:(.*))/gi.exec(action);
 			if(spotify_match !== null) {
+				action = 'playtrack';
 				console.log('\tPlaying track: ', spotify_match[0]);
-				Spotify._request('playtrack/' + spotify_match[0], cb);
+				Spotify._request(action + '/' + spotify_match[0], cb);
 			}
 		}
 	});
