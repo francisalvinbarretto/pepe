@@ -1,7 +1,7 @@
 var fs = require('fs');
 var EventEmitter = require("events");
-
 var EVENT_NAME = '!pp';
+var path = require('path');
 
 var ACTIONS = ['help', 'hello'];
 
@@ -25,7 +25,8 @@ module.exports = function(CommandDispatcher) {
 
 		switch(action) {
 			case 'help': 
-				fs.readFile('../PPhelp.txt', 'utf8', function(err, contents) {
+				fs.readFile(path.resolve(process.cwd() + '/PPhelp.txt'), 'utf8', function(err, contents) {
+					console.log(err, contents);
 					if(!err) {
 						CommandDispatcher.emit('send_response', {
 							message: {

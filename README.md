@@ -6,7 +6,7 @@ Name     	| Description
 ----------- | ---------------------------------------------
 !pp		 	| Base BOT command.
 !ppmusic 	| BOT command to control spotify music
-!ppgoogle   | BOT for google search (unavailable)
+!ppgoogle   | BOT for google search
 
 ##!pp
 
@@ -29,3 +29,8 @@ Command								| Description
 **!ppmusic vol/party**				| set the spotify volume to party.
 **!ppmusic mute**					| mute spotify.
 **!ppmusic unmute**					| unmute spotify.
+
+
+##!ppgoogle
+
+**!pp &lt;querystring&gt;**  - Searche google for the specified string. Should return first item of search results.
