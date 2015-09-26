@@ -9,7 +9,7 @@ var music_providers = {
 var EVENT_NAME = '!ppmusic';
 
 var SONATA_ACTIONS = ['play', 'pause', 'next', 'prev', 'playing' ];
-var PLAYER_ACTIONS = ['vol/low', 'vol/mid', 'vol/party', 'mute', 'unmute', 'running' ];
+var PLAYER_ACTIONS = ['vol/low', 'vol/mid', 'vol/party', 'mute', 'unmute', 'running', 'state'];
 var ACTIONS = SONATA_ACTIONS.concat(PLAYER_ACTIONS);
 
 function Music() {}
@@ -38,25 +38,36 @@ Music.prototype._request = function(action, options, cb) {
 Music.prototype.formatResponse = function(action, response) {
 	switch(action) {
 		case 'playing': 
-			if(response.error && response.message.spotify_url) {
-				return response.message.spotify_url;
+			if(!response.error && response.message.spotify_url) {
+				return { value: response.message.spotify_url, markdwn: false };
 			}
+
+			return false;
 			break;
 		case 'playtrack':
 			if(response.error) {
-				return response.message;
+				return { value: response.message, markdwn: false, icon: ':beetle:' };
 			}
 			break;
 		case 'running': 
 			if(!response.error) {
-				return response.message;
+				return { value: response.message, markdwn: false };
 			}
 			break;
 		case 'vol/low':
 		case 'vol/mid':
 		case 'vol/party':
-			return response.message;
+			return { value: response.message, markdwn: false };
 			break;
+		case 'state': 
+			var txt = [
+				"*TRACK:* " + response.message.track_id,
+				"*VOLUME:* " + response.message.volume,
+				"*POSITION:* " + response.message.position,
+				"*STATE:* " + response.message.state
+			].join("\n");
+
+			return { value: txt, markdwn: true, icon: ':beetle:'};
 		default:
 			return FALSE;
 	}
@@ -84,20 +95,19 @@ module.exports = function(CommandDispatcher) {
 			if(!err) {
 				var resJson = JSON.parse(response);
 				var formattedResponse = Spotify.formatResponse(action, resJson);
-
 				if(formattedResponse != false) {
 					var payload = {
 						message: { 
-							text: formattedResponse,
+							text: formattedResponse.value,
 							username: '!ppmusic',
-							icon_emoji: ':musical_note:'
+							markdwn: formattedResponse.markdwn || false,
+							icon_emoji: formattedResponse.icon || ':musical_note:'
 						},
 						channel: channel
 					};
 
 					CommandDispatcher.emit('send_response', payload);	
 				}
-				
 			}
 		};
 
