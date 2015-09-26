@@ -7,7 +7,6 @@ Name     	| Description
 !pp		 	| Base BOT command.
 !ppmusic 	| BOT command to control spotify music
 !ppgoogle   | BOT for google search
------------ | ---------------------------------------------
 
 ##!pp
 
@@ -15,17 +14,18 @@ Name     	| Description
 **!pp hello** - displays the name of BOT.
 
 ##!ppmusic
-
-**!ppmusic play**  		- play current spotify track. 
-**!ppmusic pause** 		- pause current spotify track.
-**!ppmusic next**		- play the next track.
-**!ppmusic prev**		- play the previous track.
-**!ppmusic playing**  	- shows current track info.
-**!ppmusic state**		- shows spotify state.
-**!ppmusic running**   - check if spotify is running.
-**!ppmusic &lt;spotify-uri&gt;** - play selected album, playlist, track from spotify. 
-**!ppmusic vol/low** - set the spotify volume to low.
-**!ppmusic vol/mid** - set the spotify volume to mid.
-**!ppmusic vol/party** - set the spotify volume to party.
-**!ppmusic mute** - mute spotify.
-**!ppmusic unmute** - unmute spotify.
+Command								| Description
+----------------------------------- | ---------------------------------------------
+**!ppmusic play**  					| play current spotify track. 
+**!ppmusic pause** 					| pause current spotify track.
+**!ppmusic next**					| play the next track.
+**!ppmusic prev**					| play the previous track.
+**!ppmusic playing**  				| shows current track info.
+**!ppmusic state**					| shows spotify state.
+**!ppmusic running**   				| check if spotify is running.
+**!ppmusic &lt;spotify-uri&gt;**	| play selected album, playlist, track from spotify. 
+**!ppmusic vol/low** 				| set the spotify volume to low.
+**!ppmusic vol/mid**				| set the spotify volume to mid.
+**!ppmusic vol/party** 				| set the spotify volume to party.
+**!ppmusic mute** 					| mute spotify.
+**!ppmusic unmute** 				| unmute spotify.
