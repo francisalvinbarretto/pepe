@@ -40,9 +40,24 @@ module.exports = function(CommandDispatcher) {
 		console.log(EVENT_NAME,': ', details.user, details.clean_message);
 
 		var action = details.clean_message[1];
+		var channel = details.channel;
 
 		var cb = function(err, response) {
-			console.log('resp: ', err, response);
+			if(!err) {
+				var resJson = JSON.parse(response);
+				console.log('json: ', resJson);
+
+				var payload = {
+					message: { 
+						text: resJson.message.spotify_url,
+						username: '!ppmusic',
+						icon_emoji: ':musical_note:'
+					},
+					channel: channel
+				};
+
+				CommandDispatcher.emit('send_response', payload);
+			}
 		};
 
 		if(ACTIONS.indexOf(action) !== -1) {

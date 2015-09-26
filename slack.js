@@ -10,6 +10,8 @@ var Message = require('./node_modules/slack-client/src/message');
 var SlackMusic = require('./music');
 
 var validCommands = [ '!pp', '!ppmusic', '!ppgoogle'];
+var SlackClient;
+
 
 function SlackCommandDispatcher() {
 	EventEmitter.call(this);
@@ -36,10 +38,8 @@ SlackCommandDispatcher.prototype.dispatch = function(cmd, options) {
 }
 
 var commandDispatcher = new SlackCommandDispatcher();
-
 //SPOTIFY MUSIC EVENTS.
 var slackMusic = new SlackMusic(commandDispatcher);
-
 
 module.exports = function(options) {
 
@@ -61,7 +61,15 @@ module.exports = function(options) {
 	}
 	
 	console.log('[SlackClient] init.');
-	var SlackClient = new Slack(options.API_KEY, true, true);
+	SlackClient = new Slack(options.API_KEY, true, true);
+
+	commandDispatcher.on('send_response', function(options) {
+		console.log('[SlackClient] send_response: ', options.message);
+		if(options.channel && options.message) {
+			options.channel.postMessage(options.message);
+		}
+	});
+
 	var SlackHandler = (function() {
 		return {
 			open: function() {
@@ -83,7 +91,7 @@ module.exports = function(options) {
 				}catch(e) {
 					user = message.user;
 				}
-				console.log('the user: ', user);
+				
 				//for slack behaviour that autorender the post if media and pages.
 				//treated as a new message entry.
 				if (!message.user || typeof user === 'undefined') {
