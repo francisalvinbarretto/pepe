@@ -1,7 +1,7 @@
 {
   "name": "pepe",
   "version": "1.0.0",
-  "description": "Pepe kain ng tapa",
+  "description": "Pepe is a SLACK BOT that listens to messages (!pepe)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
