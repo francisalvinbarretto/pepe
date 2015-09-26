@@ -42,7 +42,6 @@ Music.prototype.formatResponse = function(action, response) {
 				return response.message.spotify_url;
 			}
 			break;
-		case 'play'
 		case 'playtrack':
 			if(response.error) {
 				return response.message;
@@ -84,7 +83,7 @@ module.exports = function(CommandDispatcher) {
 		var cb = function(err, response) {
 			if(!err) {
 				var resJson = JSON.parse(response);
-				var formattedResponse = Music.formatResponse(action, resJson);
+				var formattedResponse = Spotify.formatResponse(action, resJson);
 
 				if(formattedResponse != false) {
 					var payload = {
