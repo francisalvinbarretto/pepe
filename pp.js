@@ -40,6 +40,7 @@ module.exports = function(CommandDispatcher) {
 				});
 				break;
 			case 'hello': 
+			default:
 				CommandDispatcher.emit('send_response', {
 					message: {
 						text: "Hello I'm Pepe, Your friendly BOT! kain PEPE? do *!pp help* to display list of commands",
@@ -49,8 +50,6 @@ module.exports = function(CommandDispatcher) {
 					},
 					channel: channel
 				});	
-				break;
-			default:
 		}
 	});
 }

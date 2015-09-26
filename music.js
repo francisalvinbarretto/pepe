@@ -67,9 +67,9 @@ Music.prototype.formatResponse = function(action, response) {
 				"*STATE:* " + response.message.state
 			].join("\n");
 
-			return { value: txt, markdwn: true, icon: ':beetle:'};
+			return { value: txt, markdwn: true, icon: ':musical_note:'};
 		default:
-			return FALSE;
+			return false;
 	}
 }
 
