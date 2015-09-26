@@ -8,6 +8,7 @@ var Slack = require('slack-client');
 var Message = require('./node_modules/slack-client/src/message');
 
 var SlackMusic = require('./music');
+var Pp = require('./pp');
 
 var validCommands = [ '!pp', '!ppmusic', '!ppgoogle'];
 var SlackClient;
@@ -40,6 +41,7 @@ SlackCommandDispatcher.prototype.dispatch = function(cmd, options) {
 var commandDispatcher = new SlackCommandDispatcher();
 //SPOTIFY MUSIC EVENTS.
 var slackMusic = new SlackMusic(commandDispatcher);
+var pp = new Pp(commandDispatcher);
 
 module.exports = function(options) {
 

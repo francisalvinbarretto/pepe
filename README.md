@@ -1,4 +1,4 @@
-!pp - SLACK BOT
+!pp - Pepe the SLACK BOT
 ===================
 
 ### Commands
@@ -6,7 +6,7 @@ Name     	| Description
 ----------- | ---------------------------------------------
 !pp		 	| Base BOT command.
 !ppmusic 	| BOT command to control spotify music
-!ppgoogle   | BOT for google search
+!ppgoogle   | BOT for google search (unavailable)
 
 ##!pp
 
@@ -16,16 +16,16 @@ Name     	| Description
 ##!ppmusic
 Command								| Description
 ----------------------------------- | ---------------------------------------------
-**!ppmusic play**  					| play current spotify track. 
-**!ppmusic pause** 					| pause current spotify track.
+**!ppmusic play**					| play current spotify track. 
+**!ppmusic pause**					| pause current spotify track.
 **!ppmusic next**					| play the next track.
 **!ppmusic prev**					| play the previous track.
-**!ppmusic playing**  				| shows current track info.
+**!ppmusic playing**				| shows current track info.
 **!ppmusic state**					| shows spotify state.
-**!ppmusic running**   				| check if spotify is running.
+**!ppmusic running**				| check if spotify is running.
 **!ppmusic &lt;spotify-uri&gt;**	| play selected album, playlist, track from spotify. 
-**!ppmusic vol/low** 				| set the spotify volume to low.
+**!ppmusic vol/low**				| set the spotify volume to low.
 **!ppmusic vol/mid**				| set the spotify volume to mid.
-**!ppmusic vol/party** 				| set the spotify volume to party.
-**!ppmusic mute** 					| mute spotify.
-**!ppmusic unmute** 				| unmute spotify.
+**!ppmusic vol/party**				| set the spotify volume to party.
+**!ppmusic mute**					| mute spotify.
+**!ppmusic unmute**					| unmute spotify.
