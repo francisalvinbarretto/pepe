@@ -33,7 +33,7 @@ module.exports = function(CommandDispatcher) {
 								text: "`" + contents + "`",
 								username: EVENT_NAME,
 								markdwn: true,
-								icon_emoji: ':octocat:'
+								icon_emoji: ':pepe:'
 							},
 							channel: channel
 						});	
@@ -47,7 +47,7 @@ module.exports = function(CommandDispatcher) {
 						text: "Hello I'm Pepe, Your friendly BOT! kain PEPE? do *!pp help* to display list of commands",
 						username: EVENT_NAME,
 						markdwn: true,
-						icon_emoji: ':octocat:'
+						icon_emoji: ':pepe:'
 					},
 					channel: channel
 				});	
