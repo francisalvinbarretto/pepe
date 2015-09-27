@@ -3,7 +3,8 @@ var EventEmitter = require('events');
 var request = require('request');
 
 var music_providers = {
-	francis: "192.168.254.106:3000"
+	// francis: "192.168.254.106:3000"
+	francis: "192.168.128.228:3000"
 };
 
 var EVENT_NAME = '!ppmusic';
@@ -95,7 +96,7 @@ module.exports = function(CommandDispatcher) {
 			if(!err) {
 				var resJson = JSON.parse(response);
 				var formattedResponse = Spotify.formatResponse(action, resJson);
-				if(formattedResponse != false) {
+				if(formattedResponse != false && typeof formattedResponse === 'object') {
 					var payload = {
 						message: { 
 							text: formattedResponse.value,
