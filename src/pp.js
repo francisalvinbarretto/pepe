@@ -44,7 +44,7 @@ module.exports = function(CommandDispatcher) {
 			default:
 				CommandDispatcher.emit('send_response', {
 					message: {
-						text: "Hello I'm Pepe, Your friendly BOT! kain PEPE? do *!pp help* to display list of commands",
+						text: "Hello I'm Pepe, Your friendly BOT! kain PEPE? type *!pp help* to display list of commands",
 						username: EVENT_NAME,
 						markdwn: true,
 						icon_emoji: ':pepe:'
