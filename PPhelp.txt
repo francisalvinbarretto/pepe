@@ -32,4 +32,4 @@
 
 *!ppgoogle*
 
-`!pp &lt;querystring&gt;`  - Search google for the specified string. Should return first item of search results.
+`!ppgoogle &lt;querystring&gt;`  - Search google for the specified string. Should return first item of search results.
