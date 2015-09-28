@@ -10,8 +10,9 @@ var Message = require('../node_modules/slack-client/src/message');
 var SlackMusic = require('./music');
 var Pp = require('./pp');
 var Google = require('./google');
+var Giphy = require('./giphy');
 
-var validCommands = [ '!pp', '!ppmusic', '!ppgoogle'];
+var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif'];
 var SlackClient;
 
 
@@ -23,7 +24,7 @@ util.inherits(SlackCommandDispatcher, EventEmitter);
 
 /**
  * Event dispatcher for slack message command.
- * 
+ *
  * @param string cmd
  * @param object ooptions
  * @event triggers event {cmd}
@@ -44,6 +45,8 @@ var commandDispatcher = new SlackCommandDispatcher();
 var slackMusic = new SlackMusic(commandDispatcher);
 var pp = new Pp(commandDispatcher);
 var google = new Google(commandDispatcher);
+var giphy = new Giphy(commandDispatcher);
+
 
 module.exports = function(options) {
 
@@ -63,7 +66,7 @@ module.exports = function(options) {
 			return !(bits === '');
 		});
 	}
-	
+
 	console.log('[SlackClient] init.');
 	SlackClient = new Slack(options.API_KEY, true, true);
 
@@ -77,7 +80,7 @@ module.exports = function(options) {
 	var SlackHandler = (function() {
 		return {
 			open: function() {
-				console.log('[SlackClient] Connected');	
+				console.log('[SlackClient] Connected');
 			},
 			error: function(error) {
 				console.error('[SlackClient] ERROR: ' + error);
@@ -95,7 +98,7 @@ module.exports = function(options) {
 				}catch(e) {
 					user = message.user;
 				}
-				
+
 				//for slack behaviour that autorender the post if media and pages.
 				//treated as a new message entry.
 				if (!message.user || typeof user === 'undefined') {
