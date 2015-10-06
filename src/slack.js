@@ -11,8 +11,10 @@ var SlackMusic = require('./music');
 var Pp = require('./pp');
 var Google = require('./google');
 var Giphy = require('./giphy');
+var Magic = require('./magic');
 
-var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif'];
+var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif', '!ppmagic'];
+var magicKeywords = ['janean'];
 var SlackClient;
 
 
@@ -46,6 +48,7 @@ var slackMusic = new SlackMusic(commandDispatcher);
 var pp = new Pp(commandDispatcher);
 var google = new Google(commandDispatcher);
 var giphy = new Giphy(commandDispatcher);
+var magic = new Magic(commandDispatcher);
 
 
 module.exports = function(options) {
@@ -110,6 +113,13 @@ module.exports = function(options) {
 
 				console.log('the cleaned message: ', cleaned_message);
 				var cmd = cleaned_message[0].trim();
+
+                for(i = 0; i < cleaned_message.length; i++) {
+                    if(magicKeywords.indexOf(cleaned_message[i].toLowerCase().trim()) !== -1) {
+                        cmd = '!ppmagic';
+                        cleaned_message = cleaned_message[i].toLowerCase().trim();
+                    }
+                }
 
 				if(validCommands.indexOf(cmd) === -1) {
 					console.log('Ignore command.', cmd);

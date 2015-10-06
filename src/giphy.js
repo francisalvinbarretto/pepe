@@ -27,24 +27,25 @@ module.exports = function(CommandDispatcher) {
             query.push(details.clean_message[i]);
         }
         query = encodeURIComponent(query.join(" "));
-        request({ url: 'http://tv.giphy.com/v1/gifs/tv?api_key=CW27AW0nlp5u0&tag=' + query + '&internal=yes' }, function(err, response, body) {
+        request({ url: 'http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&rating=pg-13&limit=1&q=' + query + '&internal=yes' }, function(err, response, body) {
             console.log('response: ', body);
 
             var gifs;
 
             result = JSON.parse(body);
-            gif = result.data;
+            gifs = result.data;
             var content = "No Results.";
-            if (gif != null) {
+            if ((gifs != null ? gifs.length : void 0) > 0) {
+                gif = gifs[0];
                 CommandDispatcher.emit('send_response', {
                     message: {
-                        username: EVENT_NAME,
+                        username: 'pepe',
                         markdwn: true,
                         icon_emoji: ':pepe:',
                         attachments: [
                             {
                                 text: "",
-                                image_url: gif.image_url
+                                image_url: gif.images.downsized.url
                             }
                         ]
                     },
