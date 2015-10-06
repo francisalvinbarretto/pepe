@@ -10,8 +10,11 @@ var Message = require('../node_modules/slack-client/src/message');
 var SlackMusic = require('./music');
 var Pp = require('./pp');
 var Google = require('./google');
+var Giphy = require('./giphy');
+var Magic = require('./magic');
 
-var validCommands = [ '!pp', '!ppmusic', '!ppgoogle'];
+var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif', '!ppmagic'];
+var magicKeywords = ['janean'];
 var SlackClient;
 
 
@@ -23,7 +26,7 @@ util.inherits(SlackCommandDispatcher, EventEmitter);
 
 /**
  * Event dispatcher for slack message command.
- * 
+ *
  * @param string cmd
  * @param object ooptions
  * @event triggers event {cmd}
@@ -44,6 +47,9 @@ var commandDispatcher = new SlackCommandDispatcher();
 var slackMusic = new SlackMusic(commandDispatcher);
 var pp = new Pp(commandDispatcher);
 var google = new Google(commandDispatcher);
+var giphy = new Giphy(commandDispatcher);
+var magic = new Magic(commandDispatcher);
+
 
 module.exports = function(options) {
 
@@ -63,7 +69,7 @@ module.exports = function(options) {
 			return !(bits === '');
 		});
 	}
-	
+
 	console.log('[SlackClient] init.');
 	SlackClient = new Slack(options.API_KEY, true, true);
 
@@ -77,7 +83,7 @@ module.exports = function(options) {
 	var SlackHandler = (function() {
 		return {
 			open: function() {
-				console.log('[SlackClient] Connected');	
+				console.log('[SlackClient] Connected');
 			},
 			error: function(error) {
 				console.error('[SlackClient] ERROR: ' + error);
@@ -95,7 +101,7 @@ module.exports = function(options) {
 				}catch(e) {
 					user = message.user;
 				}
-				
+
 				//for slack behaviour that autorender the post if media and pages.
 				//treated as a new message entry.
 				if (!message.user || typeof user === 'undefined') {
@@ -107,6 +113,13 @@ module.exports = function(options) {
 
 				console.log('the cleaned message: ', cleaned_message);
 				var cmd = cleaned_message[0].trim();
+
+                for(i = 0; i < cleaned_message.length; i++) {
+                    if(magicKeywords.indexOf(cleaned_message[i].toLowerCase().trim()) !== -1) {
+                        cmd = '!ppmagic';
+                        cleaned_message = cleaned_message[i].toLowerCase().trim();
+                    }
+                }
 
 				if(validCommands.indexOf(cmd) === -1) {
 					console.log('Ignore command.', cmd);
