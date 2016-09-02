@@ -7,6 +7,8 @@ Name     	| Description
 !pp		 	| Base BOT command.
 !ppmusic 	| BOT command to control spotify music
 !ppgoogle   | BOT for google search
+!ppgif      | BOT random gif image search
+!ppsay      | BOT say something...  text to speech
 
 ##!pp
 
@@ -32,5 +34,12 @@ Command								| Description
 
 
 ##!ppgoogle
+**!ppgoogle {keyword}** - Search google
+##!ppgif
+**!ppgif {keyword}** - this will return random matched gif
+
+##!ppsay
+**!ppsay {message}** - outputs the message to the speaker (text to speech)
+
 
 **!pp &lt;querystring&gt;**  - Searche google for the specified string. Should return first item of search results.
