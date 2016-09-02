@@ -12,8 +12,8 @@ var Pp = require('./pp');
 var Google = require('./google');
 var Giphy = require('./giphy');
 var Magic = require('./magic');
-
-var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif', '!ppmagic'];
+var Say = require('./say');
+var validCommands = [ '!pp', '!ppmusic', '!ppgoogle', '!ppgif', '!ppmagic', '!ppsay'];
 var magicKeywords = ['janean'];
 var SlackClient;
 
@@ -45,6 +45,7 @@ SlackCommandDispatcher.prototype.dispatch = function(cmd, options) {
 var commandDispatcher = new SlackCommandDispatcher();
 //SPOTIFY MUSIC EVENTS.
 var slackMusic = new SlackMusic(commandDispatcher);
+var saySomething = new Say(commandDispatcher);
 var pp = new Pp(commandDispatcher);
 var google = new Google(commandDispatcher);
 var giphy = new Giphy(commandDispatcher);
