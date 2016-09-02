@@ -45,7 +45,7 @@ SlackCommandDispatcher.prototype.dispatch = function(cmd, options) {
 var commandDispatcher = new SlackCommandDispatcher();
 //SPOTIFY MUSIC EVENTS.
 var slackMusic = new SlackMusic(commandDispatcher);
-var saySomething = new Say(commandDispatcher);
+var saySomething = new Say(commandDispatcher, slackMusic);
 var pp = new Pp(commandDispatcher);
 var google = new Google(commandDispatcher);
 var giphy = new Giphy(commandDispatcher);

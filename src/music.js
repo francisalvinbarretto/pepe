@@ -4,7 +4,8 @@ var request = require('request');
 
 var music_providers = {
 	// francis: "192.168.254.106:3000"
-	francis: "192.168.128.228:3000"
+	//francis: "192.168.128.228:3000"
+	// francis: "localhost:3000"
 };
 
 var EVENT_NAME = '!ppmusic';
@@ -22,6 +23,8 @@ Music.prototype._request = function(action, options, cb) {
 		options = {};
 	}
 
+	console.log('action: ', action);
+
 	var path = [ 
 		'/spotifyer/', 
 		PLAYER_ACTIONS.indexOf(action) != -1 ? 'player' : 'sonata' ,
@@ -31,7 +34,11 @@ Music.prototype._request = function(action, options, cb) {
 
 	var url = ['http://', music_providers.francis, path].join("");
 	request({ url: url }, function(err, response, body) {
-		cb(err, body);
+
+		if(typeof cb == 'function') {
+			cb(err, body);	
+		}
+		
 	});
 }
 
@@ -123,4 +130,6 @@ module.exports = function(CommandDispatcher) {
 			}
 		}
 	});
+
+	return Spotify;
 }
